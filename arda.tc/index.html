@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIIIIIIIIIIIIIIIII</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100%;
+        }
+        body {
+            background: #070c12 url('images/arkaplan.png') no-repeat center center fixed;
+            background-size: cover;
+            cursor: url('images/my-cursor.cur'), auto;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        .kali-terminal-frame {
+            box-shadow: 0 8px 32px 0 #000a;
+            overflow: hidden;
+            background: rgba(10, 22, 34, 0.25);
+            transition: all 0.3s ease-in-out;
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            border-radius: 0;
+            z-index: 9999;
+        }
+        .kali-terminal-frame.shrink {
+            max-width: 1100px;
+            margin: 60px auto 40px auto;
+            border-radius: 10px;
+            min-height: 462px;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+            position: relative;
+            inset: auto;
+            z-index: 1;
+        }
+        .kali-terminal-menubar {
+            background: #232b36;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            padding-left: 18px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 15px;
+            color: #b8c7ce;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            user-select: none;
+        }
+        .kali-terminal-topbar {
+            background: #232b36;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #232b36;
+        }
+        .kali-terminal-title {
+            color: #b8c7ce;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 15px;
+            opacity: 0.92;
+            letter-spacing: 0.5px;
+            text-align: center;
+            flex: 1;
+        }
+        .kali-terminal-close {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            background: #3daee9;
+            border: 1.5px solid #1b6ca8;
+            box-shadow: 0 0 4px #3daee9aa;
+            cursor: pointer;
+        }
+        .kali-terminal-content {
+            background: none;
+            padding: 2.5em 2.5em 2em 2.5em;
+            font-family: 'Fira Mono', 'Consolas', 'monospace';
+            color: #b8c7ce;
+            font-size: 18px;
+            height: calc(100vh - 36px);
+            box-sizing: border-box;
+        }
+        .kali-prompt { color: #6ec1e4; }
+        .kali-root { color: #ff5555; font-weight: bold; }
+        .kali-at { color: #b8c7ce; }
+        .kali-host { color: #3daee9; }
+        .kali-path { color: #b8c7ce; }
+        .kali-hash { color: #ff5555; font-weight: bold; }
+        .kali-cursor {
+            display: inline-block;
+            width: 16px;
+            height: 22px;
+            background: #fff;
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 1s steps(1) infinite;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        .kali-blog-title { color: #3daee9; text-decoration: none; font-weight: bold; }
+        .kali-blog-desc { color: #7a8fa6; font-size: 15px; margin-left: 2em; }
+        @media (max-width: 900px) {
+            .kali-terminal-frame { max-width: 99vw; }
+            .kali-terminal-content { padding: 1em 0.5em; font-size: 15px; }
+        }
+        /* Preloader epilepsi uyarılı arka plan animasyonu */
+        @keyframes epilepsy-bg {
+            0% { 
+                background: #000;
+                filter: contrast(1.2) brightness(0.8);
+            }
+            5% { 
+                background: #1a0f0f;
+                filter: contrast(1.4) brightness(0.9) hue-rotate(5deg);
+            }
+            10% { 
+                background: #0f1a0f;
+                filter: contrast(1.6) brightness(1) hue-rotate(-5deg);
+            }
+            15% { 
+                background: #0f0f1a;
+                filter: contrast(1.8) brightness(1.1) hue-rotate(10deg);
+            }
+            20% { 
+                background: #1a1a0f;
+                filter: contrast(2) brightness(1.2) hue-rotate(-10deg);
+            }
+            25% { 
+                background: #1a0f1a;
+                filter: contrast(2.2) brightness(1.3) hue-rotate(15deg);
+            }
+            30% { 
+                background: #0f1a1a;
+                filter: contrast(2.4) brightness(1.4) hue-rotate(-15deg);
+            }
+            35% { 
+                background: #1a1a1a;
+                filter: contrast(2.6) brightness(1.5) hue-rotate(20deg);
+            }
+            40% { 
+                background: #000;
+                filter: contrast(2.8) brightness(1.6) hue-rotate(-20deg);
+            }
+            45% { 
+                background: #1a0f0f;
+                filter: contrast(3) brightness(1.7) hue-rotate(25deg);
+            }
+            50% { 
+                background: #0f1a0f;
+                filter: contrast(3.2) brightness(1.8) hue-rotate(-25deg);
+            }
+            55% { 
+                background: #0f0f1a;
+                filter: contrast(3.4) brightness(1.9) hue-rotate(30deg);
+            }
+            60% { 
+                background: #1a1a0f;
+                filter: contrast(3.6) brightness(2) hue-rotate(-30deg);
+            }
+            65% { 
+                background: #1a0f1a;
+                filter: contrast(3.8) brightness(2.1) hue-rotate(35deg);
+            }
+            70% { 
+                background: #0f1a1a;
+                filter: contrast(4) brightness(2.2) hue-rotate(-35deg);
+            }
+            75% { 
+                background: #1a1a1a;
+                filter: contrast(4.2) brightness(2.3) hue-rotate(40deg);
+            }
+            80% { 
+                background: #000;
+                filter: contrast(4.4) brightness(2.4) hue-rotate(-40deg);
+            }
+            85% { 
+                background: #1a0f0f;
+                filter: contrast(4.6) brightness(2.5) hue-rotate(45deg);
+            }
+            90% { 
+                background: #0f1a0f;
+                filter: contrast(4.8) brightness(2.6) hue-rotate(-45deg);
+            }
+            95% { 
+                background: #0f0f1a;
+                filter: contrast(5) brightness(2.7) hue-rotate(50deg);
+            }
+            100% { 
+                background: #000;
+                filter: contrast(5.2) brightness(2.8) hue-rotate(-50deg);
+            }
+        }
+
+        @keyframes runRight {
+            0% {
+                left: 0%;
+                top: 50%;
+                transform: translateY(0) scaleX(1);
+            }
+            10% {
+                transform: translateY(-12px) scaleX(1.08);
+            }
+            20% {
+                left: 20%;
+                transform: translateY(0) scaleX(1);
+            }
+            30% {
+                transform: translateY(-16px) scaleX(1.12);
+            }
+            40% {
+                left: 40%;
+                transform: translateY(0) scaleX(1);
+            }
+            50% {
+                transform: translateY(-12px) scaleX(1.08);
+            }
+            60% {
+                left: 60%;
+                transform: translateY(0) scaleX(1);
+            }
+            70% {
+                transform: translateY(-8px) scaleX(1.04);
+            }
+            80% {
+                left: 80%;
+                transform: translateY(0) scaleX(1);
+            }
+            90% {
+                transform: translateY(-4px) scaleX(1.02);
+            }
+            100% {
+                left: 100%;
+                top: 50%;
+                transform: translateY(0) scaleX(1);
+            }
+        }
+
+        #preloader {
+            position: fixed;
+            z-index: 10000;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: epilepsy-bg 0.4s steps(1) infinite;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+            background: #000;
+        }
+
+        #preloader::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2) 1px,
+                    transparent 1px,
+                    transparent 2px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    rgba(0, 0, 0, 0.2),
+                    rgba(0, 0, 0, 0.2) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            animation: scanline 0.1s linear infinite;
+            mix-blend-mode: overlay;
+        }
+
+        #preloader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(
+                    circle at center,
+                    transparent 0%,
+                    rgba(0, 0, 0, 0.4) 100%
+                ),
+                repeating-conic-gradient(
+                    from 0deg,
+                    #000 0deg 10deg,
+                    transparent 10deg 20deg
+                );
+            background-size: 100% 100%, 4px 4px;
+            pointer-events: none;
+            animation: noise 0.2s steps(4) infinite;
+            mix-blend-mode: overlay;
+            opacity: 0.7;
+        }
+
+        @keyframes noise {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-1px, 1px) rotate(0.5deg); }
+            50% { transform: translate(1px, -1px) rotate(-0.5deg); }
+            75% { transform: translate(-1px, -1px) rotate(0.5deg); }
+            100% { transform: translate(1px, 1px) rotate(-0.5deg); }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%) skewX(0deg); }
+            50% { transform: translateY(0%) skewX(1deg); }
+            100% { transform: translateY(100%) skewX(0deg); }
+        }
+
+        #preloader.shrink {
+            transform: none;
+            opacity: 0;
+            border-radius: 0;
+            background: #000;
+        }
+
+        #preloader .wheel-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 420px;
+            height: 420px;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            opacity: 0.18;
+        }
+
+        #preloader img {
+            width: 640px;
+            height: 640px;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.75);
+            animation: pikachuStaticFade 3s linear forwards;
+            transition: all 0.5s ease-in-out;
+            z-index: 2;
+            will-change: opacity, filter;
+        }
+
+        #preloader.shrink img {
+            transform: none;
+            opacity: 0;
+        }
+        body, #preloader, #preloader * {
+            cursor: url('images/my-cursor.cur'), auto !important;
+        }
+
+        /* Hamster wheel effect for Pikachu */
+        @keyframes hamsterWheel {
+            0% {
+                transform: rotate(0deg) translateX(200px) rotate(0deg) scaleX(1) scaleY(1);
+            }
+            10% {
+                transform: rotate(36deg) translateX(200px) rotate(-36deg) scaleX(1.08) scaleY(0.95);
+            }
+            20% {
+                transform: rotate(72deg) translateX(200px) rotate(-72deg) scaleX(1.12) scaleY(0.92);
+            }
+            30% {
+                transform: rotate(108deg) translateX(200px) rotate(-108deg) scaleX(1.08) scaleY(0.95);
+            }
+            40% {
+                transform: rotate(144deg) translateX(200px) rotate(-144deg) scaleX(1) scaleY(1);
+            }
+            50% {
+                transform: rotate(180deg) translateX(200px) rotate(-180deg) scaleX(0.95) scaleY(1.08);
+            }
+            60% {
+                transform: rotate(216deg) translateX(200px) rotate(-216deg) scaleX(0.92) scaleY(1.12);
+            }
+            70% {
+                transform: rotate(252deg) translateX(200px) rotate(-252deg) scaleX(0.95) scaleY(1.08);
+            }
+            80% {
+                transform: rotate(288deg) translateX(200px) rotate(-288deg) scaleX(1) scaleY(1);
+            }
+            90% {
+                transform: rotate(324deg) translateX(200px) rotate(-324deg) scaleX(1.08) scaleY(0.95);
+            }
+            100% {
+                transform: rotate(360deg) translateX(200px) rotate(-360deg) scaleX(1) scaleY(1);
+            }
+        }
+
+        @keyframes pikachuStaticFade {
+            0% { opacity: 1; filter: none; transform: translate(-50%, -50%) scale(0.75); }
+            6.7% { opacity: 1; filter: none; transform: translate(-50%, -50%) scale(0.75); }
+            86.7% { opacity: 0.5; filter: grayscale(1) blur(2px); transform: translate(-50%, -50%) scale(0.75); }
+            100% { opacity: 0; filter: grayscale(1) blur(6px); transform: translate(-50%, -50%) scale(0.75); }
+        }
+
+        /* Add pixel scattering container */
+        #preloader .pixel-scatter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            animation: pixelScatter 1s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        @keyframes pixelScatter {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            5% {
+                opacity: 1;
+                transform: scale(1.2);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+                filter: blur(30px);
+            }
+        }
+
+        /* Create pixel particles */
+        #preloader .pixel-scatter::before,
+        #preloader .pixel-scatter::after,
+        #preloader .pixel-scatter .particle3,
+        #preloader .pixel-scatter .particle4 {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-image: inherit;
+            background-size: 640px 640px;
+            image-rendering: pixelated;
+            animation: scatterPixels 1s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        #preloader .pixel-scatter::before { animation-name: scatterPixels1; }
+        #preloader .pixel-scatter::after { animation-name: scatterPixels2; }
+        #preloader .pixel-scatter .particle3 { animation-name: scatterPixels3; }
+        #preloader .pixel-scatter .particle4 { animation-name: scatterPixels4; }
+
+        @keyframes scatterPixels1 {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                filter: brightness(1) contrast(1) hue-rotate(0deg) saturate(1) blur(0);
+                opacity: 0;
+            }
+            5% { opacity: 1; }
+            100% {
+                transform: translate(-200%, -200%) scale(0.3) rotate(1080deg) skew(60deg, 60deg);
+                filter: brightness(3) contrast(3) hue-rotate(360deg) saturate(3) blur(15px) invert(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scatterPixels2 {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                filter: brightness(1) contrast(1) hue-rotate(0deg) saturate(1) blur(0);
+                opacity: 0;
+            }
+            5% { opacity: 1; }
+            100% {
+                transform: translate(200%, 200%) scale(0.3) rotate(-1080deg) skew(-60deg, -60deg);
+                filter: brightness(3) contrast(3) hue-rotate(-360deg) saturate(3) blur(15px) invert(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scatterPixels3 {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                filter: brightness(1) contrast(1) hue-rotate(0deg) saturate(1) blur(0);
+                opacity: 0;
+            }
+            5% { opacity: 1; }
+            100% {
+                transform: translate(200%, -200%) scale(0.3) rotate(1080deg) skew(-60deg, 60deg);
+                filter: brightness(3) contrast(3) hue-rotate(360deg) saturate(3) blur(15px) invert(1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scatterPixels4 {
+            0% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                filter: brightness(1) contrast(1) hue-rotate(0deg) saturate(1) blur(0);
+                opacity: 0;
+            }
+            5% { opacity: 1; }
+            100% {
+                transform: translate(-200%, 200%) scale(0.3) rotate(-1080deg) skew(60deg, -60deg);
+                filter: brightness(3) contrast(3) hue-rotate(-360deg) saturate(3) blur(15px) invert(1);
+                opacity: 0;
+            }
+        }
+
+        /* Add a glitch effect overlay */
+        #preloader .glitch-overlay {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0%,
+                rgba(255, 0, 0, 0.1) 0.5%,
+                transparent 1%
+            );
+            animation: glitch 0.3s steps(2) infinite;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-1px); }
+            100% { transform: translateX(1px); }
+        }
+
+        #preloader .static-noise {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 640px;
+            height: 640px;
+            transform: translate(-50%, -50%) scale(0.75);
+            background: url('images/static.png') center center/cover no-repeat;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 3;
+            animation: staticAppear 2.4s linear forwards;
+            animation-delay: 0.2s;
+        }
+        @keyframes staticAppear {
+            0% { opacity: 0; }
+            80% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes threat-glow {
+            0% { box-shadow: 0 0 24px #000a, 0 0 8px #ff0000; color: #ff5555; }
+            100% { box-shadow: 0 0 48px #ff0000, 0 0 16px #fff; color: #fff; }
+        }
+
+        .threat-wait-text {
+            position: absolute;
+            top: 82%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            color: #e0e0e0;
+            font-family: 'IM Fell English SC', serif;
+            font-size: 2.7em;
+            text-shadow: 0 0 8px #000, 0 0 2px #a00, 0 2px 12px #000;
+            letter-spacing: 0.18em;
+            background: rgba(10,10,10,0.82);
+            padding: 0.45em 1.2em 0.35em 1.2em;
+            border-radius: 8px;
+            z-index: 20;
+            border: 1.5px solid #222;
+            box-shadow: 0 0 24px #000a, 0 0 8px #0008;
+            animation: horror-flicker 2.2s infinite alternate, horror-fade 4.2s infinite alternate;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+        }
+        .threat-wait-text span {
+            font-weight: 400;
+            display: inline-block;
+            filter: blur(0.2px);
+            letter-spacing: 0.22em;
+        }
+        @keyframes horror-flicker {
+            0% { opacity: 0.92; filter: blur(0.2px); }
+            10% { opacity: 0.7; filter: blur(0.5px); }
+            20% { opacity: 0.95; filter: blur(0.1px); }
+            30% { opacity: 0.8; filter: blur(0.3px); }
+            40% { opacity: 1; filter: blur(0.2px); }
+            50% { opacity: 0.6; filter: blur(0.7px); }
+            60% { opacity: 0.95; filter: blur(0.1px); }
+            70% { opacity: 0.8; filter: blur(0.3px); }
+            80% { opacity: 1; filter: blur(0.2px); }
+            90% { opacity: 0.7; filter: blur(0.5px); }
+            100% { opacity: 0.92; filter: blur(0.2px); }
+        }
+        @keyframes horror-fade {
+            0% { color: #e0e0e0; }
+            50% { color: #a00; }
+            100% { color: #e0e0e0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="dark-overlay"></div>
+    <div id="preloader">
+        <div class="static-noise"></div>
+        <img src="images/123.gif" alt="Yükleniyor...">
+    </div>
+    <div id="main-content" style="display:none;">
+        <div class="kali-terminal-frame shrink" id="draggable-terminal">
+            <div class="kali-terminal-topbar" id="terminal-topbar" style="height:32px;display:flex;align-items:center;justify-content:center;background:#232b36;border-bottom:1px solid #232b36;">
+                <span class="kali-terminal-title" style="color:#b8c7ce;font-family:'Fira Mono','Consolas',monospace;font-size:15px;opacity:0.92;letter-spacing:0.5px;text-align:center;">root@ardaucdu: ~</span>
+                <span class="kali-terminal-close"></span>
+            </div>
+            <div class="kali-terminal-content" id="terminal-content">
+                <div class="kali-prompt">
+                    <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> ls -la /pdfs<span class="kali-cursor"></span>
+                </div>
+                <pre class="kali-blog-desc" style="font-size:18px; margin-left:2em; color:#b8c7ce; background:none; border:none;">
+total 2
+-rw-r--r-- 1 root root  12345 Jun  7 12:34 <a href="pdfs/eng-cv.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">eng-cv.pdf</a>
+-rw-r--r-- 1 root root  23456 Jun  7 12:35 <a href="pdfs/ssti-nedir.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">ssti-nedir.pdf</a>
+</pre>
+                <div class="kali-prompt">
+                    <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> <span class="kali-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Preloader
+    window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('shrink');
+            
+            // Wait for the shrink animation to complete before hiding
+            setTimeout(function() {
+                preloader.style.display = 'none';
+                document.getElementById('main-content').style.display = '';
+            }, 500);
+        }, 3000); // Animasyon süresiyle eşitlendi
+    });
+
+    // Terminal fullscreen/shrink handling
+    const terminal = document.getElementById('draggable-terminal');
+    const topbar = document.getElementById('terminal-topbar');
+    let isFullscreen = false; // Start in shrink (small) mode
+
+    // Double click handler for fullscreen toggle
+    topbar.addEventListener('dblclick', function(e) {
+        e.preventDefault();
+        toggleFullscreen();
+    });
+
+    // Function to handle fullscreen toggle
+    function toggleFullscreen() {
+        if (isFullscreen) {
+            // Shrink to normal size
+            terminal.classList.add('shrink');
+            isFullscreen = false;
+        } else {
+            // Expand to fullscreen
+            terminal.classList.remove('shrink');
+            isFullscreen = true;
+        }
+    }
+
+    // Add escape key handler to exit fullscreen
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isFullscreen) {
+            toggleFullscreen();
+        }
+    });
+
+    // ARDA UÇDU yazısı için tuş dinleyici (terminal komutu gibi, sadece bir satır ve bir kez yazılabilir)
+    const ardaText = 'ARDA UÇDU';
+    let ardaIndex = 0;
+    let ardaDone = false;
+    document.addEventListener('keydown', function(e) {
+        if (ardaDone) return;
+        const komutSpan = document.getElementById('arda-komut');
+        if (e.key === 'Enter') {
+            ardaDone = true;
+            return;
+        }
+        if (ardaIndex < ardaText.length) {
+            komutSpan.textContent += ardaText[ardaIndex];
+            ardaIndex++;
+        }
+        if (ardaIndex > 3 && ardaIndex < ardaText.length) {
+            komutSpan.textContent = ardaText;
+            ardaDone = true;
+        }
+        if (ardaIndex === ardaText.length) {
+            ardaDone = true;
+        }
+    });
+    </script>
+</body>
+</html>
