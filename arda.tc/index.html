@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -652,7 +654,13 @@
 total 2
 -rw-r--r-- 1 root root  12345 Jun  7 12:34 <a href="pdfs/eng-cv.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">eng-cv.pdf</a>
 -rw-r--r-- 1 root root  23456 Jun  7 12:35 <a href="pdfs/ssti-nedir.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">ssti-nedir.pdf</a>
+
+{% for post in site.posts %}
+-rw-r--r-- 1 root root  {{ post.content | size }} {{ post.date | date: "%b %d %H:%M" }} <a href="{{ post.url | relative_url }}" style="color:#3daee9;text-decoration:underline;">{{ post.title | downcase | replace: " ", "-" }}</a>
+{% endfor %}
+
 </pre>
+
                 <div class="kali-prompt">
                     <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> <span class="kali-cursor"></span>
                 </div>
@@ -730,4 +738,5 @@ total 2
     });
     </script>
 </body>
+
 </html>
