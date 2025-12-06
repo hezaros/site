@@ -2,3 +2,8 @@ title: "arda.tc"
 url: "https://arda.tc"
 baseurl: "/site"
 permalink: /arda.tc/blog/:title/
+defaults:
+  - scope:
+      path: "_posts"
+    values:
+      layout: "post"

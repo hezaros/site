@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - arda.tc</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            width: 100%;
+        }
+        body {
+            background: #070c12 url('../images/arkaplan.png') no-repeat center center fixed;
+            background-size: cover;
+            cursor: url('../images/my-cursor.cur'), auto;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        .kali-terminal-frame {
+            box-shadow: 0 8px 32px 0 #000a;
+            overflow: auto;
+            background: rgba(10, 22, 34, 0.92);
+            transition: all 0.3s ease-in-out;
+            max-width: 1100px;
+            margin: 60px auto 40px auto;
+            border-radius: 10px;
+            min-height: 462px;
+            width: auto;
+            position: relative;
+            z-index: 1;
+        }
+        .kali-terminal-topbar {
+            background: #232b36;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #232b36;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .kali-terminal-title {
+            color: #b8c7ce;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            font-size: 15px;
+            opacity: 0.92;
+            letter-spacing: 0.5px;
+            text-align: center;
+            flex: 1;
+        }
+        .kali-terminal-content {
+            background: none;
+            padding: 2.5em 2.5em 2em 2.5em;
+            font-family: 'Fira Mono', 'Consolas', 'monospace';
+            color: #b8c7ce;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+        .kali-prompt {
+            color: #6ec1e4;
+            margin-bottom: 1em;
+        }
+        .kali-root { color: #ff5555; font-weight: bold; }
+        .kali-at { color: #b8c7ce; }
+        .kali-host { color: #3daee9; }
+        .kali-path { color: #b8c7ce; }
+        .kali-hash { color: #ff5555; font-weight: bold; }
+        
+        /* Blog içerik stilleri */
+        .post-content {
+            color: #b8c7ce;
+            line-height: 1.8;
+        }
+        .post-content h1 {
+            color: #3daee9;
+            font-size: 2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            border-bottom: 2px solid #3daee9;
+            padding-bottom: 0.3em;
+        }
+        .post-content h2 {
+            color: #6ec1e4;
+            font-size: 1.5em;
+            margin-top: 1.3em;
+            margin-bottom: 0.6em;
+        }
+        .post-content h3 {
+            color: #7a8fa6;
+            font-size: 1.2em;
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+        }
+        .post-content p {
+            margin-bottom: 1.2em;
+        }
+        .post-content a {
+            color: #3daee9;
+            text-decoration: underline;
+        }
+        .post-content a:hover {
+            color: #6ec1e4;
+        }
+        .post-content ul, .post-content ol {
+            margin-left: 2em;
+            margin-bottom: 1.2em;
+        }
+        .post-content li {
+            margin-bottom: 0.5em;
+        }
+        .post-content code {
+            background: rgba(10, 22, 34, 0.8);
+            color: #6ec1e4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .post-content pre {
+            background: rgba(10, 22, 34, 0.9);
+            color: #b8c7ce;
+            padding: 1.5em;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #232b36;
+            margin: 1.5em 0;
+        }
+        .post-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+        .post-content blockquote {
+            border-left: 4px solid #3daee9;
+            padding-left: 1.5em;
+            margin: 1.5em 0;
+            color: #7a8fa6;
+            font-style: italic;
+        }
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5em 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+        .post-meta {
+            color: #7a8fa6;
+            font-size: 0.9em;
+            margin-bottom: 2em;
+            padding-bottom: 1em;
+            border-bottom: 1px solid #232b36;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2em;
+            color: #3daee9;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #6ec1e4;
+            text-decoration: underline;
+        }
+        @media (max-width: 900px) {
+            .kali-terminal-frame {
+                max-width: 95vw;
+                margin: 20px auto;
+            }
+            .kali-terminal-content {
+                padding: 1.5em 1em;
+                font-size: 16px;
+            }
+        }
+        body, * {
+            cursor: url('../images/my-cursor.cur'), auto !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="kali-terminal-frame">
+        <div class="kali-terminal-topbar">
+            <span class="kali-terminal-title">root@ardaucdu: ~/blog/{{ page.title | downcase | replace: " ", "-" }}</span>
+        </div>
+        <div class="kali-terminal-content">
+            <div class="kali-prompt">
+                <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~/blog#</span> cat {{ page.title | downcase | replace: " ", "-" }}.md
+            </div>
+            
+            <div class="post-meta">
+                <strong>Yayın Tarihi:</strong> {{ page.date | date: "%d %B %Y" }}<br>
+                <strong>Başlık:</strong> {{ page.title }}
+            </div>
+            
+            <div class="post-content">
+                {{ content }}
+            </div>
+            
+            <div class="kali-prompt" style="margin-top: 2em;">
+                <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~/blog#</span> <span class="kali-cursor"></span>
+            </div>
+            
+            <a href="../" class="back-link">← Ana Sayfaya Dön</a>
+        </div>
+    </div>
+</body>
+</html>
+
