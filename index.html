@@ -124,9 +124,82 @@
         }
         .kali-blog-title { color: #3daee9; text-decoration: none; font-weight: bold; }
         .kali-blog-desc { color: #7a8fa6; font-size: 15px; margin-left: 2em; }
+        /* Mobil Optimizasyonları */
         @media (max-width: 900px) {
-            .kali-terminal-frame { max-width: 99vw; }
-            .kali-terminal-content { padding: 1em 0.5em; font-size: 15px; }
+            .kali-terminal-frame { 
+                max-width: 100vw; 
+                margin: 10px 0;
+                border-radius: 0;
+                min-height: auto;
+            }
+            .kali-terminal-content { 
+                padding: 1em 0.8em; 
+                font-size: 14px;
+                overflow-x: auto;
+            }
+            .kali-terminal-topbar {
+                height: 28px;
+            }
+            .kali-terminal-title {
+                font-size: 12px;
+                padding: 0 10px;
+            }
+            .kali-prompt {
+                font-size: 13px;
+                word-break: break-word;
+            }
+            .kali-blog-desc {
+                font-size: 13px;
+                margin-left: 1em;
+                overflow-x: auto;
+            }
+            .kali-blog-desc a {
+                word-break: break-all;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .kali-terminal-frame { 
+                margin: 0;
+                border-radius: 0;
+            }
+            .kali-terminal-content { 
+                padding: 0.8em 0.6em; 
+                font-size: 13px;
+            }
+            .kali-terminal-topbar {
+                height: 26px;
+            }
+            .kali-terminal-title {
+                font-size: 11px;
+            }
+            .kali-prompt {
+                font-size: 12px;
+            }
+            .kali-blog-desc {
+                font-size: 12px;
+                margin-left: 0.5em;
+            }
+            .kali-cursor {
+                width: 12px;
+                height: 18px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .kali-terminal-content { 
+                padding: 0.6em 0.4em; 
+                font-size: 12px;
+            }
+            .kali-terminal-title {
+                font-size: 10px;
+            }
+            .kali-prompt {
+                font-size: 11px;
+            }
+            .kali-blog-desc {
+                font-size: 11px;
+            }
         }
         /* Preloader epilepsi uyarılı arka plan animasyonu */
         @keyframes epilepsy-bg {
@@ -375,6 +448,30 @@
         #preloader.shrink img {
             transform: none;
             opacity: 0;
+        }
+        
+        @media (max-width: 600px) {
+            #preloader img {
+                width: 400px;
+                height: 400px;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            #preloader .wheel-bg {
+                width: 300px;
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            #preloader img {
+                width: 300px;
+                height: 300px;
+                transform: translate(-50%, -50%) scale(0.4);
+            }
+            #preloader .wheel-bg {
+                width: 250px;
+                height: 250px;
+            }
         }
         body, #preloader, #preloader * {
             cursor: url('arda.tc/images/my-cursor.cur'), auto !important;
@@ -662,6 +759,30 @@
             background: #3daee9;
             color: #0a1622;
             font-weight: bold;
+        }
+        
+        @media (max-width: 600px) {
+            .language-selector {
+                top: 10px;
+                right: 10px;
+                gap: 4px;
+            }
+            .lang-btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .language-selector {
+                top: 5px;
+                right: 5px;
+                gap: 3px;
+            }
+            .lang-btn {
+                padding: 3px 6px;
+                font-size: 10px;
+            }
         }
     </style>
 </head>
