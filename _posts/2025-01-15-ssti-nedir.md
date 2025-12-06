@@ -19,6 +19,8 @@ CSTI'da ise template işleme işlemi, kullanıcının tarayıcısı üzerinde ge
 
 Örnek olarak jinja2 de güvenli bir template kısmı örneği:
 
+![Güvenli Kod Örneği](/arda.tc/images/ssti-nedir/page_1_img_1.jpeg)
+
 ```python
 render() fonksiyonuna gönderilen template "Hello {{name}}" statik bir değerdir, input
 "Arda" sadece "name" adlı değişkenin değeri olarak atanıyor.
@@ -26,9 +28,13 @@ render() fonksiyonuna gönderilen template "Hello {{name}}" statik bir değerdir
 
 Bu kodun çıktısı `Hello Arda` şeklinde olacaktır ve `{{7*7}}` ifadesi burada çalışmayacaktır.
 
+![Güvenli Kod Çıktısı](/arda.tc/images/ssti-nedir/page_1_img_2.jpeg)
+
 ## Zafiyetli Kod Örneği
 
 Zafiyetli kod örneği ise aşağıdaki gibidir:
+
+![Zafiyetli Kod Örneği](/arda.tc/images/ssti-nedir/page_2_img_1.jpeg)
 
 ```python
 template = "Hello " + user_input
@@ -59,6 +65,8 @@ ${{<%[arda%'"}}\.
 
 Örnek olarak verdiğimiz input ve çıktı karşılaştırıldığında `<%` özel karakterlerin eksik olduğunu görüyoruz.
 
+![SSTI Tespiti Örneği](/arda.tc/images/ssti-nedir/page_3_img_1.jpeg)
+
 ## SALDIRI SENARYOSU 1
 
 Bu davranışı internette araştırdığımızda (book.hacktricks.wiki de önerilir, kullanılabilir.) ERB (Ruby), Mako (Python) gibi sık kullanılan template engine ile alakalı olduğunu görüyoruz.
@@ -68,6 +76,8 @@ ERB ile örnek olarak passwd dosyasını okumaya çalıştığımızda:
 ```erb
 <%= system('cat /etc/passwd') %>
 ```
+
+![ERB Saldırı Örneği](/arda.tc/images/ssti-nedir/page_3_img_2.jpeg)
 
 Bu sistemde başarılı oluyoruz. Eğer başarılı olamasaydık diğer ihtimaldeki (`<%` kullanan) template engine'leri denerdik veya bu sistemde ERB template kullanıldığından eminsek ve zafiyet olduğunu düşünüyorsak sistemde komut çalıştırma fonksiyonlarına erişimin engellendiğini düşünürüz. Fakat Ruby ve diğer OOP diller sayesinde, farklı yollar denememiz mümkün çünkü OOP de her şey nesnedir. Yani düşünce biçimimiz her nesne bir class'a sahip, o class üzerinden gelen methodlara erişebiliriz ve bazı methodlar ile başka class ve methodlara ulaşabiliriz.
 
@@ -79,7 +89,11 @@ Sistemde Template injection olduğunu anladıktan sonra:
 
 İlk olarak `<%= "arda".class %>` yazıp çıktısını görürüz bu ilk adım. Bize şuan nerde durduğumuzu ve Ruby'de her sınıf başka bir sınıftan türetildiğini bildiğimizden zincirin ilk aşamasıdır. Bundan sonra bir üst sınıfa çıkacağız.
 
+![Saldırı Senaryosu 2 - Adım 1](/arda.tc/images/ssti-nedir/page_4_img_1.jpeg)
+
 Diğer aşamada superclass'a çıkacağız `<%= "arda".class.superclass %>` yazdığımızda `Object` çıktısını alıyoruz. Object sınıfı Ruby'deki en temel sınıftır ve içinde bir çok işimize yarayabilecek method vardır.
+
+![Saldırı Senaryosu 2 - Adım 2](/arda.tc/images/ssti-nedir/page_4_img_2.jpeg)
 
 Method aşamasında `<%= Object.methods %>` inputunu methodları görmek için kullanılırız. Burada uzunca bir method çıktısı alıyoruz.
 
@@ -97,6 +111,8 @@ Passwd dosyasını okumayı yukarıdan topladığımız bilgilerle:
 ```
 
 ile deneyebiliriz.
+
+![Saldırı Senaryosu 2 - Final](/arda.tc/images/ssti-nedir/page_4_img_3.jpeg)
 
 Eğer passwd dosyasını direkt `<%= system('cat /etc/passwd') %>` şeklinde okuyamasaydık senaryosu üzerine gittik ve en son kullandığımız payload ile okuduk.
 
