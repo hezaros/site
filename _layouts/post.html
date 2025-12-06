@@ -181,7 +181,7 @@
             color: #6ec1e4;
             text-decoration: underline;
         }
-        /* Mobil Optimizasyonları */
+        /* Mobil Optimizasyonları - Tutarlı Font Hiyerarşisi */
         @media (max-width: 900px) {
             .kali-terminal-frame {
                 max-width: 100vw;
@@ -191,7 +191,7 @@
             }
             .kali-terminal-content {
                 padding: 0.8em 0.6em;
-                font-size: 14px;
+                font-size: 13px;
                 overflow-x: hidden;
                 overflow-y: auto;
                 max-height: calc(100vh - 100px);
@@ -203,13 +203,19 @@
                 font-size: 11px;
                 padding: 0 8px;
             }
+            .kali-prompt {
+                font-size: 12px;
+                word-break: break-word;
+                line-height: 1.5;
+                margin-bottom: 0.5em;
+            }
             .post-content {
                 font-size: 13px;
                 overflow-x: hidden;
                 line-height: 1.6;
             }
             .post-content h1 {
-                font-size: 1.4em;
+                font-size: 1.35em;
                 word-wrap: break-word;
                 margin-top: 1em;
                 margin-bottom: 0.6em;
@@ -228,13 +234,13 @@
             }
             .post-content pre {
                 padding: 0.7em;
-                font-size: 0.75em;
+                font-size: 0.85em;
                 overflow-x: auto;
                 white-space: pre-wrap;
                 word-wrap: break-word;
             }
             .post-content code {
-                font-size: 0.75em;
+                font-size: 0.85em;
                 word-wrap: break-word;
             }
             .post-content img {
@@ -252,6 +258,9 @@
             .post-content li {
                 margin-bottom: 0.4em;
             }
+            .post-meta {
+                font-size: 0.85em;
+            }
         }
         
         @media (max-width: 600px) {
@@ -261,7 +270,7 @@
             }
             .kali-terminal-content {
                 padding: 0.6em 0.5em;
-                font-size: 13px;
+                font-size: 12px;
                 max-height: calc(100vh - 80px);
             }
             .kali-terminal-topbar {
@@ -272,9 +281,10 @@
                 padding: 0 5px;
             }
             .kali-prompt {
-                font-size: 12px;
+                font-size: 11px;
                 word-break: break-word;
                 line-height: 1.4;
+                margin-bottom: 0.4em;
             }
             .post-content {
                 font-size: 12px;
@@ -286,21 +296,21 @@
                 margin-bottom: 0.5em;
             }
             .post-content h2 {
-                font-size: 1.05em;
+                font-size: 1.1em;
                 margin-top: 0.7em;
                 margin-bottom: 0.4em;
             }
             .post-content h3 {
-                font-size: 0.9em;
+                font-size: 0.95em;
                 margin-top: 0.6em;
                 margin-bottom: 0.3em;
             }
             .post-content pre {
                 padding: 0.5em;
-                font-size: 0.7em;
+                font-size: 0.8em;
             }
             .post-content code {
-                font-size: 0.7em;
+                font-size: 0.8em;
             }
             .post-content p {
                 font-size: 0.9em;
@@ -314,7 +324,7 @@
                 margin-bottom: 0.3em;
             }
             .post-meta {
-                font-size: 0.75em;
+                font-size: 0.8em;
             }
         }
         
@@ -325,7 +335,7 @@
             }
             .kali-terminal-content {
                 padding: 0.5em 0.4em;
-                font-size: 12px;
+                font-size: 11px;
                 max-height: calc(100vh - 70px);
             }
             .kali-terminal-topbar {
@@ -336,8 +346,9 @@
                 padding: 0 4px;
             }
             .kali-prompt {
-                font-size: 11px;
+                font-size: 10px;
                 line-height: 1.3;
+                margin-bottom: 0.3em;
             }
             .post-content {
                 font-size: 11px;
@@ -354,7 +365,7 @@
                 margin-bottom: 0.3em;
             }
             .post-content h3 {
-                font-size: 0.85em;
+                font-size: 0.9em;
             }
             .post-content p {
                 font-size: 0.85em;
@@ -362,10 +373,10 @@
             }
             .post-content pre {
                 padding: 0.4em;
-                font-size: 0.65em;
+                font-size: 0.75em;
             }
             .post-content code {
-                font-size: 0.65em;
+                font-size: 0.75em;
             }
             .post-content ul, .post-content ol {
                 font-size: 0.85em;
