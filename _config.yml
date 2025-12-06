@@ -1,7 +1,7 @@
 title: "arda.tc"
 url: "https://arda.tc"
-baseurl: "/site"
-permalink: /arda.tc/blog/:title/
+baseurl: ""
+permalink: /blog/:title/
 defaults:
   - scope:
       path: "_posts"
