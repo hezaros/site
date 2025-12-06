@@ -889,14 +889,9 @@
                 <div class="kali-prompt">
                     <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> ls -la /blog<span class="kali-cursor"></span>
                 </div>
-                <pre class="kali-blog-desc" style="margin-left:2em; color:#b8c7ce; background:none; border:none; white-space:pre-wrap; word-wrap:break-word; overflow-x:hidden; line-height:1.6;">
-{% assign post_count = site.posts | size %}
-total {{ post_count }}
-{% for post in site.posts %}
--rw-r--r-- 1 root root  {{ post.content | size }} {{ post.date | date: "%b %d %H:%M" }} <a href="{{ post.url | relative_url }}" class="blog-post-link" data-lang="{{ post.lang | default: 'tr' }}" data-slug="{{ post.slug | default: post.title | downcase | replace: ' ', '-' }}" style="color:#3daee9;text-decoration:underline;">{{ post.title | downcase | replace: " ", "-" }}</a>
-{% endfor %}
-
-</pre>
+                <pre class="kali-blog-desc" style="margin-left:2em; color:#b8c7ce; background:none; border:none; white-space:pre-wrap; word-wrap:break-word; overflow-x:hidden; line-height:1.6;">total 0
+{% for post in site.posts %}{% assign post_slug = post.slug | default: post.title | downcase | replace: " ", "-" %}-rw-r--r-- 1 root root  {{ post.content | size }} {{ post.date | date: "%b %d %H:%M" }} <a href="{{ post.url | relative_url }}" class="blog-post-link" data-lang="{{ post.lang | default: 'tr' }}" data-slug="{{ post_slug }}" style="color:#3daee9;text-decoration:underline;">{{ post.title | downcase | replace: " ", "-" }}</a>
+{% endfor %}</pre>
 
                 <div class="kali-prompt">
                     <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> <span class="kali-cursor"></span>
@@ -1013,26 +1008,41 @@ total {{ post_count }}
         // Blog listesini filtrele
         function filterBlogPosts() {
             let visibleCount = 0;
+            const seenSlugs = new Map(); // slug -> link mapping
+            
+            // Önce tüm linkleri topla ve slug'lara göre grupla
             blogLinks.forEach(link => {
                 const postLang = link.dataset.lang || defaultLang;
-                if (postLang === currentLang) {
-                    link.style.display = '';
-                    link.parentElement.style.display = '';
-                    visibleCount++;
-                } else {
-                    link.style.display = 'none';
-                    link.parentElement.style.display = 'none';
+                const postSlug = link.dataset.slug || '';
+                const lineElement = link.parentElement;
+                
+                if (!seenSlugs.has(postSlug)) {
+                    seenSlugs.set(postSlug, []);
                 }
+                seenSlugs.get(postSlug).push({ link, lineElement, lang: postLang });
+            });
+            
+            // Her slug için sadece seçili dilde olanı göster
+            seenSlugs.forEach((posts, slug) => {
+                let found = false;
+                posts.forEach(({ link, lineElement, lang }) => {
+                    if (lang === currentLang && !found) {
+                        link.style.display = '';
+                        lineElement.style.display = '';
+                        visibleCount++;
+                        found = true;
+                    } else {
+                        link.style.display = 'none';
+                        lineElement.style.display = 'none';
+                    }
+                });
             });
             
             // Total satırını güncelle
             const blogDesc = document.querySelector('.kali-blog-desc');
             if (blogDesc) {
-                const lines = blogDesc.textContent.split('\n');
-                lines[0] = 'total ' + visibleCount;
-                // Sadece total satırını güncelle, diğer satırları koru
                 const htmlContent = blogDesc.innerHTML;
-                blogDesc.innerHTML = htmlContent.replace(/^total \d+/, 'total ' + visibleCount);
+                blogDesc.innerHTML = htmlContent.replace(/total \d+/, 'total ' + visibleCount);
             }
         }
         

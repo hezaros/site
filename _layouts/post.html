@@ -513,24 +513,32 @@
         const defaultLang = 'tr';
         const currentLang = '{{ page.lang | default: "tr" }}';
         const langButtons = document.querySelectorAll('.lang-btn');
+        const otherLangLinks = document.querySelectorAll('.other-languages a');
         
-        // Aktif dili göster
+        // Aktif dili göster ve butonları ayarla
         langButtons.forEach(btn => {
-            if (btn.dataset.lang === currentLang) {
+            const btnLang = btn.dataset.lang;
+            
+            if (btnLang === currentLang) {
                 btn.classList.add('active');
             } else {
                 // Diğer dillerdeki versiyonları kontrol et
-                const otherLangLinks = document.querySelectorAll('.other-languages a');
                 let hasOtherLang = false;
+                let targetUrl = '';
+                
                 otherLangLinks.forEach(link => {
-                    if (link.textContent.trim() === btn.dataset.lang.toUpperCase()) {
+                    if (link.textContent.trim() === btnLang.toUpperCase()) {
                         hasOtherLang = true;
-                        btn.onclick = function() {
-                            window.location.href = link.href;
-                        };
+                        targetUrl = link.href;
                     }
                 });
-                if (!hasOtherLang) {
+                
+                if (hasOtherLang) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.location.href = targetUrl;
+                    });
+                } else {
                     btn.classList.add('disabled');
                 }
             }
