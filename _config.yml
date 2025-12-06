@@ -2,6 +2,8 @@ title: "arda.tc"
 url: "https://arda.tc"
 baseurl: ""
 permalink: /blog/:title/
+default_lang: "tr"
+languages: ["tr", "en", "de"]
 defaults:
   - scope:
       path: "_posts"

@@ -632,6 +632,37 @@
             50% { color: #a00; }
             100% { color: #e0e0e0; }
         }
+        
+        /* Dil Seçici Stilleri */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 8px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+        }
+        .lang-btn {
+            background: rgba(35, 43, 54, 0.9);
+            border: 1px solid #3daee9;
+            color: #b8c7ce;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            background: rgba(61, 174, 233, 0.2);
+            color: #3daee9;
+        }
+        .lang-btn.active {
+            background: #3daee9;
+            color: #0a1622;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -639,6 +670,11 @@
     <div id="preloader">
         <div class="static-noise"></div>
         <img src="arda.tc/images/123.gif" alt="Yükleniyor...">
+    </div>
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="de">DE</button>
     </div>
     <div id="main-content" style="display:none;">
         <div class="kali-terminal-frame shrink" id="draggable-terminal">
@@ -656,7 +692,7 @@ total 2
 -rw-r--r-- 1 root root  23456 Jun  7 12:35 <a href="arda.tc/pdfs/ssti-nedir.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">ssti-nedir.pdf</a>
 
 {% for post in site.posts %}
--rw-r--r-- 1 root root  {{ post.content | size }} {{ post.date | date: "%b %d %H:%M" }} <a href="{{ post.url | relative_url }}" style="color:#3daee9;text-decoration:underline;">{{ post.title | downcase | replace: " ", "-" }}</a>
+-rw-r--r-- 1 root root  {{ post.content | size }} {{ post.date | date: "%b %d %H:%M" }} <a href="{{ post.url | relative_url }}" class="blog-post-link" data-lang="{{ post.lang | default: 'tr' }}" data-slug="{{ post.slug | default: post.title | downcase | replace: ' ', '-' }}" style="color:#3daee9;text-decoration:underline;">{{ post.title | downcase | replace: " ", "-" }}</a>
 {% endfor %}
 
 </pre>
@@ -736,6 +772,60 @@ total 2
             ardaDone = true;
         }
     });
+
+    // Dil Seçimi ve Filtreleme
+    (function() {
+        // Varsayılan dil
+        const defaultLang = 'tr';
+        
+        // localStorage'dan dil seçimini al veya varsayılanı kullan
+        let currentLang = localStorage.getItem('selectedLang') || defaultLang;
+        
+        // Dil butonlarını bul
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const blogLinks = document.querySelectorAll('.blog-post-link');
+        
+        // Aktif dili göster
+        function updateActiveLang() {
+            langButtons.forEach(btn => {
+                if (btn.dataset.lang === currentLang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+        
+        // Blog listesini filtrele
+        function filterBlogPosts() {
+            blogLinks.forEach(link => {
+                const postLang = link.dataset.lang || defaultLang;
+                if (postLang === currentLang) {
+                    link.style.display = '';
+                    link.parentElement.style.display = '';
+                } else {
+                    link.style.display = 'none';
+                    link.parentElement.style.display = 'none';
+                }
+            });
+        }
+        
+        // Dil butonlarına event listener ekle
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentLang = this.dataset.lang;
+                localStorage.setItem('selectedLang', currentLang);
+                updateActiveLang();
+                filterBlogPosts();
+            });
+        });
+        
+        // Sayfa yüklendiğinde filtrele
+        window.addEventListener('DOMContentLoaded', function() {
+            updateActiveLang();
+            filterBlogPosts();
+        });
+    })();
     </script>
 </body>
 

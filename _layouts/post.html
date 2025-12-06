@@ -182,9 +182,64 @@
         body, * {
             cursor: url('/arda.tc/images/my-cursor.cur'), auto !important;
         }
+        
+        /* Dil Seçici Stilleri */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 8px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+        }
+        .lang-btn {
+            background: rgba(35, 43, 54, 0.9);
+            border: 1px solid #3daee9;
+            color: #b8c7ce;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            background: rgba(61, 174, 233, 0.2);
+            color: #3daee9;
+        }
+        .lang-btn.active {
+            background: #3daee9;
+            color: #0a1622;
+            font-weight: bold;
+        }
+        .lang-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .other-languages {
+            margin-top: 1.5em;
+            padding-top: 1em;
+            border-top: 1px solid #232b36;
+            color: #7a8fa6;
+            font-size: 0.9em;
+        }
+        .other-languages a {
+            color: #3daee9;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .other-languages a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <div class="language-selector">
+        <button class="lang-btn" data-lang="tr">TR</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+    </div>
     <div class="kali-terminal-frame">
         <div class="kali-terminal-topbar">
             <span class="kali-terminal-title">root@ardaucdu: ~/blog/{{ page.title | downcase | replace: " ", "-" }}</span>
@@ -196,7 +251,8 @@
             
             <div class="post-meta">
                 <strong>Yayın Tarihi:</strong> {{ page.date | date: "%d %B %Y" }}<br>
-                <strong>Başlık:</strong> {{ page.title }}
+                <strong>Başlık:</strong> {{ page.title }}<br>
+                <strong>Dil:</strong> {{ page.lang | default: "tr" | upcase }}
             </div>
             
             <div class="post-content">
@@ -207,9 +263,53 @@
                 <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~/blog#</span> <span class="kali-cursor"></span>
             </div>
             
+            {% assign current_slug = page.slug | default: page.title | downcase | replace: " ", "-" %}
+            {% assign current_lang = page.lang | default: "tr" %}
+            {% assign other_posts = site.posts | where: "slug", current_slug %}
+            {% if other_posts.size > 1 %}
+            <div class="other-languages">
+                <strong>Diğer Diller:</strong>
+                {% for post in other_posts %}
+                    {% if post.lang != current_lang %}
+                        <a href="{{ post.url | relative_url }}">{{ post.lang | upcase }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
             <a href="/" class="back-link">← Ana Sayfaya Dön</a>
         </div>
     </div>
+    <script>
+    // Dil Seçimi (Blog Sayfası)
+    (function() {
+        const defaultLang = 'tr';
+        const currentLang = '{{ page.lang | default: "tr" }}';
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        // Aktif dili göster
+        langButtons.forEach(btn => {
+            if (btn.dataset.lang === currentLang) {
+                btn.classList.add('active');
+            } else {
+                // Diğer dillerdeki versiyonları kontrol et
+                const otherLangLinks = document.querySelectorAll('.other-languages a');
+                let hasOtherLang = false;
+                otherLangLinks.forEach(link => {
+                    if (link.textContent.trim() === btn.dataset.lang.toUpperCase()) {
+                        hasOtherLang = true;
+                        btn.onclick = function() {
+                            window.location.href = link.href;
+                        };
+                    }
+                });
+                if (!hasOtherLang) {
+                    btn.classList.add('disabled');
+                }
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
 
