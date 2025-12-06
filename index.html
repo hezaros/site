@@ -135,7 +135,12 @@
             0%, 50% { opacity: 1; }
             51%, 100% { opacity: 0; }
         }
-        .kali-blog-title { color: #3daee9; text-decoration: none; font-weight: bold; }
+        .kali-blog-title { 
+            color: #3daee9; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 15px;
+        }
         .kali-blog-desc { 
             color: #7a8fa6; 
             font-size: 15px; 
@@ -171,17 +176,23 @@
                 font-size: 12px;
                 word-break: break-word;
                 margin-bottom: 0.5em;
+                line-height: 1.5;
             }
             .kali-blog-desc {
-                font-size: 12px;
+                font-size: 11px !important;
                 margin-left: 0.5em;
                 overflow-x: hidden;
                 word-wrap: break-word;
+                line-height: 1.5;
             }
             .kali-blog-desc a {
                 word-break: break-all;
                 display: inline-block;
                 max-width: 100%;
+                font-size: 11px !important;
+            }
+            .kali-blog-title {
+                font-size: 11px !important;
             }
         }
         
@@ -206,15 +217,24 @@
             .kali-prompt {
                 font-size: 11px;
                 line-height: 1.4;
+                margin-bottom: 0.4em;
             }
             .kali-blog-desc {
-                font-size: 11px;
+                font-size: 10px !important;
                 margin-left: 0.3em;
-                line-height: 1.5;
+                line-height: 1.4;
+            }
+            .kali-blog-desc a {
+                font-size: 10px !important;
             }
             .kali-blog-desc pre {
-                white-space: pre-wrap;
-                word-wrap: break-word;
+                white-space: pre-wrap !important;
+                word-wrap: break-word !important;
+                overflow-x: hidden !important;
+                font-size: 10px !important;
+            }
+            .kali-blog-title {
+                font-size: 10px !important;
             }
             .kali-cursor {
                 width: 10px;
@@ -242,11 +262,21 @@
             .kali-prompt {
                 font-size: 10px;
                 line-height: 1.3;
+                margin-bottom: 0.3em;
             }
             .kali-blog-desc {
-                font-size: 10px;
+                font-size: 9px !important;
                 margin-left: 0.2em;
-                line-height: 1.4;
+                line-height: 1.3;
+            }
+            .kali-blog-desc a {
+                font-size: 9px !important;
+            }
+            .kali-blog-desc pre {
+                font-size: 9px !important;
+            }
+            .kali-blog-title {
+                font-size: 9px !important;
             }
             .kali-cursor {
                 width: 8px;
@@ -859,7 +889,7 @@
                 <div class="kali-prompt">
                     <span class="kali-root">root</span><span class="kali-at">@</span><span class="kali-host">ardaucdu</span><span class="kali-path">:~#</span> ls -la /pdfs<span class="kali-cursor"></span>
                 </div>
-                <pre class="kali-blog-desc" style="font-size:18px; margin-left:2em; color:#b8c7ce; background:none; border:none; white-space:pre-wrap; word-wrap:break-word; overflow-x:hidden; line-height:1.6;">
+                <pre class="kali-blog-desc" style="margin-left:2em; color:#b8c7ce; background:none; border:none; white-space:pre-wrap; word-wrap:break-word; overflow-x:hidden; line-height:1.6;">
 total 2
 -rw-r--r-- 1 root root  12345 Jun  7 12:34 <a href="arda.tc/pdfs/eng-cv.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">eng-cv.pdf</a>
 -rw-r--r-- 1 root root  23456 Jun  7 12:35 <a href="arda.tc/pdfs/ssti-nedir.pdf" target="_blank" style="color:#3daee9;text-decoration:underline;">ssti-nedir.pdf</a>
