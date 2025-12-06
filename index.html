@@ -877,18 +877,31 @@ total 2
         </div>
     </div>
     <script>
-    // Preloader
+    // Preloader - Sadece ilk ziyarette göster
     window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
+        // localStorage'dan kontrol et
+        const hasVisited = localStorage.getItem('arda_tc_visited');
+        
+        if (hasVisited) {
+            // Daha önce ziyaret edilmişse preloader'ı direkt gizle
             const preloader = document.getElementById('preloader');
-            preloader.classList.add('shrink');
-            
-            // Wait for the shrink animation to complete before hiding
+            preloader.style.display = 'none';
+            document.getElementById('main-content').style.display = '';
+        } else {
+            // İlk ziyaret - preloader'ı göster
             setTimeout(function() {
-                preloader.style.display = 'none';
-                document.getElementById('main-content').style.display = '';
-            }, 500);
-        }, 3000); // Animasyon süresiyle eşitlendi
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('shrink');
+                
+                // Wait for the shrink animation to complete before hiding
+                setTimeout(function() {
+                    preloader.style.display = 'none';
+                    document.getElementById('main-content').style.display = '';
+                    // İlk ziyareti işaretle
+                    localStorage.setItem('arda_tc_visited', 'true');
+                }, 500);
+            }, 3000); // Animasyon süresiyle eşitlendi
+        }
     });
 
     // Terminal fullscreen/shrink handling
